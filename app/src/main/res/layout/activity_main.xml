@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <androidx.leanback.widget.BrowseFrameLayout
+        android:id="@+id/blfNavBar"
+        android:layout_width="50dp"
+        android:background="#000000"
+        android:nextFocusLeft="@id/container"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp">
+
+            <TextView
+                android:id="@+id/btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_search"
+                />
+
+            <TextView
+                android:id="@+id/btn_home"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_home"
+                />
+
+            <TextView
+                android:id="@+id/btn_movies"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_movies" />
+
+            <TextView
+                android:id="@+id/btn_tv"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_tv"
+                />
+
+            <TextView
+                android:id="@+id/btn_sports"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_sports"
+                />
+
+            <TextView
+                android:id="@+id/btn_settings"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:drawableLeft="@drawable/ic_settings"
+                />
+
+            <TextView
+                android:id="@+id/btn_language"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_language"
+                />
+
+            <TextView
+                android:id="@+id/btn_genre"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:focusable="true"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_genre"
+                />
+
+
+        </LinearLayout>
+
+    </androidx.leanback.widget.BrowseFrameLayout>
+
+</FrameLayout>
