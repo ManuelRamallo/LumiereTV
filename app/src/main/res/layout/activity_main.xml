@@ -30,6 +30,7 @@
         app:layout_constraintGuide_percent=".06" />
 
     <ImageView
+        android:id="@+id/img_banner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="16:9"
@@ -69,7 +70,7 @@
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Language: English"
+        android:text="Subtitle"
         android:layout_marginTop="16dp"
         android:textSize="14sp"
         android:textColor="#FFF"
@@ -83,7 +84,7 @@
         android:id="@+id/tv_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Language: English"
+        android:text="Description"
         android:layout_marginTop="16dp"
         android:textSize="13sp"
         android:textColor="#FFF"

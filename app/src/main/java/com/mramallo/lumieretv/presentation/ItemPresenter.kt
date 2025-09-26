@@ -9,12 +9,12 @@ import android.widget.ImageView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.Detail
+import com.mramallo.lumieretv.util.getPosterImage
 
 class ItemPresenter: Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
@@ -34,7 +34,7 @@ class ItemPresenter: Presenter() {
 
         val imageView = viewHolder.view.findViewById<ImageView>(R.id.poster_image)
 
-        val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
+        val url = getPosterImage(content?.poster_path ?: "")
         Log.d("image", "URL: $url")
         Glide.with(viewHolder.view.context)
             .load(url)

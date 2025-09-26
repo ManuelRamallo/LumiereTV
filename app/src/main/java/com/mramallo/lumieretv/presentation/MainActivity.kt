@@ -6,10 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.DataModel
 import com.mramallo.lumieretv.databinding.ActivityMainBinding
+import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -47,6 +49,8 @@ class MainActivity : FragmentActivity() {
         val dataList: DataModel = gson.fromJson(br, DataModel::class.java)
 
         listFragment.binData(dataList = dataList)
+
+        updateBanner(dataList)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -56,5 +60,14 @@ class MainActivity : FragmentActivity() {
             var elapsed = System.currentTimeMillis() - startTime
             Log.d("TIEMPO", "MainActivity - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
         }
+    }
+
+    fun updateBanner(dataList: DataModel) {
+        binding.tvTitle.text = dataList.result[0].details[3].title
+        binding.tvDescription.text = dataList.result[0].details[3].overview
+
+        Glide.with(this)
+            .load(getBannerImage(dataList.result[0].details[3].backdrop_path))
+            .into(binding.imgBanner)
     }
 }
