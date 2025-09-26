@@ -1,6 +1,7 @@
 package com.mramallo.lumieretv.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,9 +19,12 @@ class MainActivity : FragmentActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var listFragment: ListFragment
 
+    private var startTime = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        startTime = System.currentTimeMillis()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -43,5 +47,14 @@ class MainActivity : FragmentActivity() {
         val dataList: DataModel = gson.fromJson(br, DataModel::class.java)
 
         listFragment.binData(dataList = dataList)
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+
+        if(hasFocus){
+            var elapsed = System.currentTimeMillis() - startTime
+            Log.d("TIEMPO", "MainActivity - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
+        }
     }
 }
