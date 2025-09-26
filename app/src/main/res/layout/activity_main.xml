@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.MainActivity"
+    android:background="#282828">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -33,25 +34,24 @@
         android:id="@+id/img_banner"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:adjustViewBounds="true"
         app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent=".6"
-        android:adjustViewBounds="true"
         />
 
     <View
         android:id="@+id/view_gradient_horizontal"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent=".7"
+        android:background="@drawable/banner_gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:background="@drawable/banner_gradient"
-        />
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".75" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -95,15 +95,14 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
         />
-    
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/list_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_center"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/guideline_center" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
