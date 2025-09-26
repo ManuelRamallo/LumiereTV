@@ -2,37 +2,54 @@ package com.mramallo.lumieretv.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.DataModel
 import com.mramallo.lumieretv.data.Detail
-import com.mramallo.lumieretv.databinding.ActivityMainBinding
+import com.mramallo.lumieretv.databinding.FragmentHomeBinding
 import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class MainActivity : FragmentActivity() {
+class HomeFragment : Fragment () {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var listFragment: ListFragment
 
     private var startTime = 0L
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        startTime = System.currentTimeMillis()
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init(view)
+
+        var elapsed = System.currentTimeMillis() - startTime
+        Log.d("TIEMPO", "HomeFragment - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
+    }
+
+    fun init(view: View) {
         startTime = System.currentTimeMillis()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        // setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -40,12 +57,12 @@ class MainActivity : FragmentActivity() {
 
         // Load fragment for list movies
         listFragment = ListFragment()
-        val transaction = supportFragmentManager.beginTransaction()
+        val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.list_fragment, listFragment)
         transaction.commit()
 
         val gson = Gson()
-        val i: InputStream = this.assets.open("movies.json")
+        val i: InputStream = requireContext().assets.open("movies.json")
         val br = BufferedReader(InputStreamReader(i))
         val dataList: DataModel = gson.fromJson(br, DataModel::class.java)
 
@@ -53,15 +70,6 @@ class MainActivity : FragmentActivity() {
 
         listFragment.setOnContentSelectedListener {
             updateBanner(it)
-        }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-
-        if(hasFocus){
-            var elapsed = System.currentTimeMillis() - startTime
-            Log.d("TIEMPO", "MainActivity - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
         }
     }
 
