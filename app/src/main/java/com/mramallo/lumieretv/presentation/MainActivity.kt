@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.DataModel
+import com.mramallo.lumieretv.data.Detail
 import com.mramallo.lumieretv.databinding.ActivityMainBinding
 import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
@@ -50,7 +51,9 @@ class MainActivity : FragmentActivity() {
 
         listFragment.binData(dataList = dataList)
 
-        updateBanner(dataList)
+        listFragment.setOnContentSelectedListener {
+            updateBanner(it)
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -62,12 +65,12 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    fun updateBanner(dataList: DataModel) {
-        binding.tvTitle.text = dataList.result[0].details[3].title
-        binding.tvDescription.text = dataList.result[0].details[3].overview
+    fun updateBanner(detail: Detail) {
+        binding.tvTitle.text = detail.title
+        binding.tvDescription.text = detail.overview
 
         Glide.with(this)
-            .load(getBannerImage(dataList.result[0].details[3].backdrop_path))
+            .load(getBannerImage(detail.backdrop_path))
             .into(binding.imgBanner)
     }
 }

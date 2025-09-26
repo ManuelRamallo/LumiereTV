@@ -11,13 +11,19 @@ import androidx.leanback.widget.FocusHighlight
 import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.ListRow
 import androidx.leanback.widget.ListRowPresenter
+import androidx.leanback.widget.OnItemViewSelectedListener
+import androidx.leanback.widget.Presenter
+import androidx.leanback.widget.Row
+import androidx.leanback.widget.RowPresenter
 import com.mramallo.lumieretv.data.DataModel
+import com.mramallo.lumieretv.data.Detail
 
 class ListFragment : RowsSupportFragment() {
 
     private var startTime = 0L
 
     private var rootAdapter: ArrayObjectAdapter = ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
+    private var itemSelectedListener: ((Detail) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +40,8 @@ class ListFragment : RowsSupportFragment() {
         var elapsed = System.currentTimeMillis() - startTime
         Log.d("TIEMPO", "ListFragment - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
         adapter = rootAdapter
+
+        onItemViewSelectedListener = ItemViewSelectedListener()
     }
 
     fun binData(dataList: DataModel) {
@@ -48,6 +56,24 @@ class ListFragment : RowsSupportFragment() {
             val listRow = ListRow(headerItem, arrayObjectAdapter)
             rootAdapter.add(listRow)
         }
+    }
+
+    fun setOnContentSelectedListener(listener: (Detail) -> Unit){
+        this.itemSelectedListener = listener
+    }
+
+    inner class ItemViewSelectedListener: OnItemViewSelectedListener {
+        override fun onItemSelected(
+            itemViewHolder: Presenter.ViewHolder?,
+            item: Any?,
+            rowViewHolder: RowPresenter.ViewHolder?,
+            row: Row?
+        ) {
+            if(item is Detail){
+                itemSelectedListener?.invoke(item)
+            }
+        }
+
     }
 
 }
