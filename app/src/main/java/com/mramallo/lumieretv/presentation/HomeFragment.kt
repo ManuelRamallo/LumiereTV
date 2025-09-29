@@ -21,7 +21,8 @@ import java.io.InputStreamReader
 
 class HomeFragment : Fragment () {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var _binding: FragmentHomeBinding
+    private val binding get() = _binding
     private lateinit var listFragment: ListFragment
 
     private var startTime = 0L
@@ -31,8 +32,8 @@ class HomeFragment : Fragment () {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        startTime = System.currentTimeMillis()
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class HomeFragment : Fragment () {
     fun init(view: View) {
         startTime = System.currentTimeMillis()
 
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        //_binding = FragmentHomeBinding.inflate(layoutInflater)
         // setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.main)) { v, insets ->
