@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity"
+    tools:context=".presentation.HomeFragment"
     android:background="#282828">
 
 
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".06" />
+        app:layout_constraintGuide_percent=".07" />
 
     <ImageView
         android:id="@+id/img_banner"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent=".75" />
+        app:layout_constraintWidth_percent=".7" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -70,11 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Subtitle"
-        android:layout_marginTop="16dp"
         android:textSize="14sp"
         android:textColor="#FFF"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent=".7"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
         />
@@ -99,7 +97,6 @@
         android:id="@+id/list_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
