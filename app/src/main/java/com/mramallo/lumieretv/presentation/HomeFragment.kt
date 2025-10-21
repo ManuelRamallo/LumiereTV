@@ -25,8 +25,6 @@ class HomeFragment : Fragment () {
     private val binding get() = _binding
     private lateinit var listFragment: ListFragment
 
-    private var startTime = 0L
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,18 +37,13 @@ class HomeFragment : Fragment () {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(view)
-
-        var elapsed = System.currentTimeMillis() - startTime
-        Log.d("TIEMPO", "HomeFragment - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
     }
 
     fun init(view: View) {
-        startTime = System.currentTimeMillis()
-
         //_binding = FragmentHomeBinding.inflate(layoutInflater)
         // setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets

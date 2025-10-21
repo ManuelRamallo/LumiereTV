@@ -20,8 +20,6 @@ import com.mramallo.lumieretv.data.Detail
 
 class ListFragment : RowsSupportFragment() {
 
-    private var startTime = 0L
-
     private var rootAdapter: ArrayObjectAdapter = ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
     private var itemSelectedListener: ((Detail) -> Unit)? = null
 
@@ -30,15 +28,12 @@ class ListFragment : RowsSupportFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        startTime = System.currentTimeMillis()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var elapsed = System.currentTimeMillis() - startTime
-        Log.d("TIEMPO", "ListFragment - Tiempo hasta que la pantalla está visible: ${elapsed} ms")
         adapter = rootAdapter
 
         onItemViewSelectedListener = ItemViewSelectedListener()
