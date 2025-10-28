@@ -11,12 +11,15 @@ import androidx.fragment.app.FragmentActivity
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.databinding.ActivityMainBinding
 import com.mramallo.lumieretv.presentation.fragments.HomeFragment
+import com.mramallo.lumieretv.presentation.fragments.SearchFragment
+import com.mramallo.lumieretv.util.Constants
 import com.mramallo.lumieretv.util.getWidthInPercent
 
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
     private lateinit var binding: ActivityMainBinding
     private var isOpenSideMenu = false
+    private var selectedMenu = Constants.MENU_HOME
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +59,37 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
             when(i) {
                 KeyEvent.KEYCODE_DPAD_CENTER -> {
                     when(view?.id) {
+                        R.id.btn_search -> {
+                            selectedMenu = Constants.MENU_SEARCH
+                            changeFragment(SearchFragment())
+                        }
                         R.id.btn_home -> {
+                            selectedMenu = Constants.MENU_HOME
                             changeFragment(HomeFragment())
                         }
-                        R.id.btn_search -> {
-                            //changeFragment(SearchFragment())
+                        R.id.btn_tv -> {
+                            selectedMenu = Constants.MENU_TV
+                            changeFragment(SearchFragment())
+                        }
+                        R.id.btn_movies -> {
+                            selectedMenu = Constants.MENU_MOVIES
+                            changeFragment(SearchFragment())
+                        }
+                        R.id.btn_sports -> {
+                            selectedMenu = Constants.MENU_SPORTS
+                            changeFragment(SearchFragment())
+                        }
+                        R.id.btn_language -> {
+                            selectedMenu = Constants.MENU_LANGUAGE
+                            changeFragment(SearchFragment())
+                        }
+                        R.id.btn_genre -> {
+                            selectedMenu = Constants.MENU_GENRES
+                            changeFragment(SearchFragment())
+                        }
+                        R.id.btn_settings -> {
+                            selectedMenu = Constants.MENU_SETTINGS
+                            changeFragment(SearchFragment())
                         }
                     }
                 }
