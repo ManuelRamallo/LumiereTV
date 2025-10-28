@@ -3,6 +3,8 @@ package com.mramallo.lumieretv.presentation
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +22,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     private lateinit var binding: ActivityMainBinding
     private var isOpenSideMenu = false
     private var selectedMenu = Constants.MENU_HOME
+    lateinit var lastSelectedMenu: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,10 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         binding.btnSettings.setOnKeyListener(this)
         binding.btnLanguage.setOnKeyListener(this)
         binding.btnGenre.setOnKeyListener(this)
-        
+
+
+        lastSelectedMenu = binding.btnHome
+        lastSelectedMenu.isActivated = true
         changeFragment(HomeFragment())
     }
 
@@ -58,7 +64,12 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         if (keyEvent?.action == KeyEvent.ACTION_DOWN) {
             when(i) {
                 KeyEvent.KEYCODE_DPAD_CENTER -> {
-                    when(view?.id) {
+
+                    lastSelectedMenu.isActivated = false
+                    view?.isActivated = true
+                    lastSelectedMenu = view!!
+
+                    when(view.id) {
                         R.id.btn_search -> {
                             selectedMenu = Constants.MENU_SEARCH
                             changeFragment(SearchFragment())
@@ -95,9 +106,9 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                 }
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
                     if(!isOpenSideMenu) {
+                        switchToLastSelectedMenu()
                         openMenu()
                         isOpenSideMenu = true
-                        return true // Indicar que el evento ha sido consumido
                     }
                 }
                 else -> {}
@@ -124,7 +135,39 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         } else super.onBackPressed()
     }
 
+    fun switchToLastSelectedMenu() {
+        when(selectedMenu) {
+            Constants.MENU_SEARCH -> {
+                binding.btnSearch.requestFocus()
+            }
+            Constants.MENU_HOME -> {
+                binding.btnHome.requestFocus()
+            }
+            Constants.MENU_TV -> {
+                binding.btnTv.requestFocus()
+            }
+            Constants.MENU_MOVIES -> {
+                binding.btnMovies.requestFocus()
+            }
+            Constants.MENU_SPORTS -> {
+                binding.btnSports.requestFocus()
+            }
+            Constants.MENU_LANGUAGE -> {
+                binding.btnLanguage.requestFocus()
+            }
+            Constants.MENU_GENRES -> {
+                binding.btnGenre.requestFocus()
+            }
+            Constants.MENU_SETTINGS -> {
+                binding.btnSettings.requestFocus()
+            }
+        }
+    }
+
     fun openMenu(){
+        val animSlide: Animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left)
+        binding.blfNavBar.startAnimation(animSlide)
+
         binding.blfNavBar.requestLayout()
         binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 16)
     }
@@ -132,6 +175,9 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     fun closeMenu() {
         binding.blfNavBar.requestLayout()
         binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 5)
+
+        binding.container.requestFocus()
+        isOpenSideMenu = false
     }
 
 }
