@@ -2,6 +2,7 @@ package com.mramallo.lumieretv.presentation.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,10 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mramallo.lumieretv.R
-import com.mramallo.lumieretv.data.DataModel
-import com.mramallo.lumieretv.data.Detail
+import com.mramallo.lumieretv.domain.model.DataModel
+import com.mramallo.lumieretv.domain.model.Detail
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
 import com.mramallo.lumieretv.presentation.DetailActivity
-import com.mramallo.lumieretv.presentation.fragments.ListFragment
 import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
 import java.io.InputStream
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
             updateBanner(it)
         }
 
-        listFragment.setOnItemClickListener() {
+        listFragment.setOnItemClickListener {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("id", it.id)
             startActivity(intent)

@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.mramallo.lumieretv.R
-import com.mramallo.lumieretv.data.Detail
+import com.mramallo.lumieretv.domain.model.Detail
 import com.mramallo.lumieretv.util.getPosterImage
 
 class ItemPresenter: Presenter() {

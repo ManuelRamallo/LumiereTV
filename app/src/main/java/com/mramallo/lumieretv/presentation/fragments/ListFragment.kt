@@ -15,8 +15,8 @@ import androidx.leanback.widget.OnItemViewSelectedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
-import com.mramallo.lumieretv.data.DataModel
-import com.mramallo.lumieretv.data.Detail
+import com.mramallo.lumieretv.domain.model.DataModel
+import com.mramallo.lumieretv.domain.model.Detail
 import com.mramallo.lumieretv.presentation.presenters.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {

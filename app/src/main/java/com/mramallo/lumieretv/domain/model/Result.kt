@@ -1,4 +1,4 @@
-package com.mramallo.lumieretv.data
+package com.mramallo.lumieretv.domain.model
 
 data class Result(
     val details: List<Detail>,
