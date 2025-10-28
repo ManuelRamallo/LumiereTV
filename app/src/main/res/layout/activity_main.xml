@@ -32,8 +32,8 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:drawablePadding="16dp"
-                android:layout_marginStart="16dp"
+                android:drawablePadding="20dp"
+                android:layout_marginStart="12dp"
                 android:drawableStart="@drawable/ic_search"
                 android:text="Search"
                 />
@@ -44,9 +44,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="Home"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_home"
                 />
 
@@ -56,9 +56,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="Movies"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_movies" />
 
             <TextView
@@ -67,9 +67,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="TV"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_tv"
                 />
 
@@ -79,9 +79,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="Sports"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_sports"
                 />
 
@@ -91,9 +91,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="Settings"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="45dp"
                 android:drawableLeft="@drawable/ic_settings"
                 />
@@ -104,9 +104,9 @@
                 android:layout_height="45dp"
                 android:focusable="true"
                 android:text="Language"
-                android:drawablePadding="16dp"
+                android:drawablePadding="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_language"
                 />
 
@@ -117,8 +117,8 @@
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:text="Genre"
-                android:drawablePadding="16dp"
-                android:layout_marginStart="16dp"
+                android:drawablePadding="20dp"
+                android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_genre"
                 />
 

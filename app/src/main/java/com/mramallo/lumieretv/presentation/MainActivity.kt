@@ -50,21 +50,27 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     }
 
     override fun onKey(view: View?, i: Int, keyEvent: KeyEvent?): Boolean {
-        when(i) {
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
-                if(!SIDE_MENU) {
-                    openMenu()
-                    SIDE_MENU = true
+        // Asegurarse de que solo se procesa el evento una vez (al presionar, no al soltar)
+        if (keyEvent?.action == KeyEvent.ACTION_DOWN) {
+            when(i) {
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
+                    if(!SIDE_MENU) {
+                        openMenu()
+                        SIDE_MENU = true
+                        return true // Indicar que el evento ha sido consumido
+                    }
                 }
+                else -> {}
             }
-            else -> {}
         }
-        return false
+        return false // Devolver false para otros eventos o si no se consume
     }
 
     fun openMenu(){
-        binding.blfNavBar.requestLayout()
-        binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 16)
+        val params = binding.blfNavBar.layoutParams
+        params.width = getWidthInPercent(this, 16)
+        binding.blfNavBar.layoutParams = params
+
     }
 
 }
