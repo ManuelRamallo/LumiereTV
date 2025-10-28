@@ -15,7 +15,7 @@ import com.mramallo.lumieretv.util.getWidthInPercent
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
     private lateinit var binding: ActivityMainBinding
-    private var SIDE_MENU = false
+    private var isOpenSideMenu = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +54,9 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         if (keyEvent?.action == KeyEvent.ACTION_DOWN) {
             when(i) {
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    if(!SIDE_MENU) {
+                    if(!isOpenSideMenu) {
                         openMenu()
-                        SIDE_MENU = true
+                        isOpenSideMenu = true
                         return true // Indicar que el evento ha sido consumido
                     }
                 }
@@ -66,11 +66,32 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         return false // Devolver false para otros eventos o si no se consume
     }
 
-    fun openMenu(){
-        val params = binding.blfNavBar.layoutParams
-        params.width = getWidthInPercent(this, 16)
-        binding.blfNavBar.layoutParams = params
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
+        if ( keyCode == KeyEvent.KEYCODE_DPAD_DOWN_RIGHT && isOpenSideMenu) {
+            isOpenSideMenu = false
+            closeMenu()
+        }
+
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        if(isOpenSideMenu) {
+            isOpenSideMenu = false
+            closeMenu()
+        } else super.onBackPressed()
+    }
+
+    fun openMenu(){
+        binding.blfNavBar.requestLayout()
+        binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 16)
+    }
+
+    fun closeMenu() {
+        binding.blfNavBar.requestLayout()
+        binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 5)
     }
 
 }

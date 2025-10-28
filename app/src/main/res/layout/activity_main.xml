@@ -36,6 +36,8 @@
                 android:layout_marginStart="12dp"
                 android:drawableStart="@drawable/ic_search"
                 android:text="Search"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -48,6 +50,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_home"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -59,7 +63,10 @@
                 android:drawablePadding="20dp"
                 android:gravity="center_vertical"
                 android:layout_marginStart="12dp"
-                android:drawableLeft="@drawable/ic_movies" />
+                android:drawableLeft="@drawable/ic_movies"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
+                />
 
             <TextView
                 android:id="@+id/btn_tv"
@@ -71,6 +78,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_tv"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -83,6 +92,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_sports"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -96,6 +107,8 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="45dp"
                 android:drawableLeft="@drawable/ic_settings"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -108,6 +121,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_language"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
             <TextView
@@ -120,6 +135,8 @@
                 android:drawablePadding="20dp"
                 android:layout_marginStart="12dp"
                 android:drawableLeft="@drawable/ic_genre"
+                android:background="@drawable/selector_menu"
+                android:textColor="@drawable/text_selector_white_grey"
                 />
 
 
