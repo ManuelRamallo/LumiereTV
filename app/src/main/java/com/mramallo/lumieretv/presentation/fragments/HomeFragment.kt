@@ -1,5 +1,6 @@
 package com.mramallo.lumieretv.presentation.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.DataModel
 import com.mramallo.lumieretv.data.Detail
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
+import com.mramallo.lumieretv.presentation.DetailActivity
 import com.mramallo.lumieretv.presentation.fragments.ListFragment
 import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
@@ -64,6 +66,12 @@ class HomeFragment : Fragment() {
 
         listFragment.setOnContentSelectedListener {
             updateBanner(it)
+        }
+
+        listFragment.setOnItemClickListener() {
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("id", it.id)
+            startActivity(intent)
         }
     }
 
