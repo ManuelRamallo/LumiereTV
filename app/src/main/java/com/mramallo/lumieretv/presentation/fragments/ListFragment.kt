@@ -1,7 +1,6 @@
-package com.mramallo.lumieretv.presentation
+package com.mramallo.lumieretv.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,12 @@ import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
 import com.mramallo.lumieretv.data.DataModel
 import com.mramallo.lumieretv.data.Detail
+import com.mramallo.lumieretv.presentation.presenters.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
 
-    private var rootAdapter: ArrayObjectAdapter = ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
+    private var rootAdapter: ArrayObjectAdapter =
+        ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
     private var itemSelectedListener: ((Detail) -> Unit)? = null
 
     override fun onCreateView(

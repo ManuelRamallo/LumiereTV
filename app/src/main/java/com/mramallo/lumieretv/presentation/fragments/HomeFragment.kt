@@ -1,7 +1,6 @@
-package com.mramallo.lumieretv.presentation
+package com.mramallo.lumieretv.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,13 @@ import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.DataModel
 import com.mramallo.lumieretv.data.Detail
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
+import com.mramallo.lumieretv.presentation.fragments.ListFragment
 import com.mramallo.lumieretv.util.getBannerImage
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class HomeFragment : Fragment () {
+class HomeFragment : Fragment() {
 
     private lateinit var _binding: FragmentHomeBinding
     private val binding get() = _binding

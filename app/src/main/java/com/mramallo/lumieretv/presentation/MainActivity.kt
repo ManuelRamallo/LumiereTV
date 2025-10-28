@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.databinding.ActivityMainBinding
+import com.mramallo.lumieretv.presentation.fragments.HomeFragment
 import com.mramallo.lumieretv.util.getWidthInPercent
 
 
@@ -53,6 +54,16 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         // Asegurarse de que solo se procesa el evento una vez (al presionar, no al soltar)
         if (keyEvent?.action == KeyEvent.ACTION_DOWN) {
             when(i) {
+                KeyEvent.KEYCODE_DPAD_CENTER -> {
+                    when(view?.id) {
+                        R.id.btn_home -> {
+                            changeFragment(HomeFragment())
+                        }
+                        R.id.btn_search -> {
+                            //changeFragment(SearchFragment())
+                        }
+                    }
+                }
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
                     if(!isOpenSideMenu) {
                         openMenu()

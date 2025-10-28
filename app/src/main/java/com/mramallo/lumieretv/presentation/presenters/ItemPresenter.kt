@@ -1,4 +1,4 @@
-package com.mramallo.lumieretv.presentation
+package com.mramallo.lumieretv.presentation.presenters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -52,7 +52,7 @@ class ItemPresenter: Presenter() {
                 override fun onResourceReady(
                     resource: Drawable,
                     model: Any,
-                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+                    target: Target<Drawable>?,
                     dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
