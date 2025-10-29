@@ -61,13 +61,25 @@ class DetailActivity: FragmentActivity() {
             }
         }
 
-        /*binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
+        binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
             Log.d("BUTTONS", "entra en el setOnkeyListener")
             when(keyCode) {
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
                     if(keyEvent.action == KeyEvent.ACTION_DOWN) {
                         Log.d("BUTTONS", "entra en el IF")
                         castFragment.requestFocus()
+                        return@setOnKeyListener true
+                    }
+                }
+            }
+            false
+        }
+
+        /*binding.castFragment.setOnKeyListener { view, keyCode, keyEvent ->
+            when(keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> {
+                    if(keyEvent.action == KeyEvent.ACTION_DOWN) {
+                        binding.addToMylist.requestFocus()
                         return@setOnKeyListener true
                     }
                 }

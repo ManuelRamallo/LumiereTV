@@ -108,4 +108,8 @@ class ListFragment : RowsSupportFragment() {
 
     }
 
+    fun requestFocus() {
+        view?.requestFocus()
+    }
+
 }
