@@ -1,7 +1,6 @@
 package com.mramallo.lumieretv.presentation
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.KeyEvent
 import androidx.databinding.DataBindingUtil
@@ -23,7 +22,6 @@ class DetailActivity: FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
         addFragment(castFragment = castFragment)
@@ -62,30 +60,16 @@ class DetailActivity: FragmentActivity() {
         }
 
         binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
-            Log.d("BUTTONS", "entra en el setOnkeyListener")
             when(keyCode) {
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
                     if(keyEvent.action == KeyEvent.ACTION_DOWN) {
-                        Log.d("BUTTONS", "entra en el IF")
                         castFragment.requestFocus()
-                        return@setOnKeyListener true
                     }
                 }
             }
+
             false
         }
-
-        /*binding.castFragment.setOnKeyListener { view, keyCode, keyEvent ->
-            when(keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP -> {
-                    if(keyEvent.action == KeyEvent.ACTION_DOWN) {
-                        binding.addToMylist.requestFocus()
-                        return@setOnKeyListener true
-                    }
-                }
-            }
-            false
-        }*/
     }
 
     private fun addFragment(castFragment: ListFragment) {

@@ -108,8 +108,10 @@ class ListFragment : RowsSupportFragment() {
 
     }
 
-    fun requestFocus() {
+    fun requestFocus(): View {
+        val view = view
         view?.requestFocus()
+        return view!!
     }
 
 }
