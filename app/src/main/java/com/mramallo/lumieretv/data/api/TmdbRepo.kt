@@ -3,19 +3,24 @@ package com.mramallo.lumieretv.data.api
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mramallo.lumieretv.data.Constants.API_KEY
+import com.mramallo.lumieretv.data.model.CastResponse
 import com.mramallo.lumieretv.data.model.DetailResponse
 
 class TmdbRepo(val service: ApiService) {
 
     val detailData = MutableLiveData<Response<DetailResponse>>()
+    val castData = MutableLiveData<Response<CastResponse>>()
 
     val movieDetail: LiveData<Response<DetailResponse>>
         get() = detailData
 
-    suspend fun getMovieDetails(id: Int) {
-        val result = service.getMovieDetails(id, API_KEY)
+    val castDetail: LiveData<Response<CastResponse>>
+        get() = castData
 
+    suspend fun getMovieDetails(id: Int) {
         try {
+            val result = service.getMovieDetails(id, API_KEY)
+
             if(result.body() != null) {
                 detailData.postValue(Response.Success(result.body()))
             } else {
@@ -23,6 +28,20 @@ class TmdbRepo(val service: ApiService) {
             }
         } catch (e: Exception) {
             detailData.postValue(Response.Error(e.message ?: "Exception ocurred"))
+        }
+    }
+
+    suspend fun getMovieCast(id: Int) {
+        try {
+            val result = service.getMovieCast(id, API_KEY)
+
+            if(result.body() != null) {
+                castData.postValue(Response.Success(result.body()))
+            } else {
+                castData.postValue(Response.Error(result.errorBody()?.string() ?: "Unknown error"))
+            }
+        } catch (e: Exception) {
+            castData.postValue(Response.Error(e.message ?: "Exception ocurred"))
         }
     }
 

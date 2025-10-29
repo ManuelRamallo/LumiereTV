@@ -4,5 +4,9 @@
     <color name="transparent">#00000000</color>
     <color name="color_grey">#F8F8F8</color>
     <color name="color_white">#FFFFFF</color>
+    <color name="color_red">#FF0000</color>
+    <color name="color_green">#34FF00</color>
+    <color name="color_blue">#0025FF</color>
+    <color name="color_purple">#B500FF</color>
 
 </resources>

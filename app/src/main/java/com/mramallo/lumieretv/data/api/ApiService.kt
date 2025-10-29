@@ -1,5 +1,6 @@
 package com.mramallo.lumieretv.data.api
 
+import com.mramallo.lumieretv.data.model.CastResponse
 import com.mramallo.lumieretv.data.model.DetailResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,5 +13,11 @@ interface ApiService {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<DetailResponse>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCast(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<CastResponse>
 
 }
