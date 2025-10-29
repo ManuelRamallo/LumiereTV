@@ -3,6 +3,7 @@ package com.mramallo.lumieretv.presentation
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +29,6 @@ class DetailActivity: FragmentActivity() {
         addFragment(castFragment = castFragment)
 
         val movieId = intent.getIntExtra("id", 0)
-
         val repository = (application as MyApplication).tmdbRepo
 
         viewModel = ViewModelProvider(this, DetailViewModelFactory(repository, movieId))[DetailViewModel::class.java]
@@ -60,9 +60,21 @@ class DetailActivity: FragmentActivity() {
                 }
             }
         }
+
+        /*binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
+            Log.d("BUTTONS", "entra en el setOnkeyListener")
+            when(keyCode) {
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    if(keyEvent.action == KeyEvent.ACTION_DOWN) {
+                        Log.d("BUTTONS", "entra en el IF")
+                        castFragment.requestFocus()
+                        return@setOnKeyListener true
+                    }
+                }
+            }
+            false
+        }*/
     }
-
-
 
     private fun addFragment(castFragment: ListFragment) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -70,13 +82,13 @@ class DetailActivity: FragmentActivity() {
         transaction.commit()
     }
 
-    private fun setData(it: DetailResponse?) {
-        Log.d("DATA", "setData ->> $it")
-        binding.title.text = it?.title ?: ""
-        binding.subtitle.text = getSubtitle(it)
-        binding.description.text = it?.overview ?: ""
+    private fun setData(response: DetailResponse?) {
+        Log.d("DATA", "setData ->> $response")
+        binding.title.text = response?.title ?: ""
+        binding.subtitle.text = getSubtitle(response)
+        binding.description.text = response?.overview ?: ""
 
-        val path = "https://www.themoviedb.org/t/p/w780" + (it?.backdrop_path ?: "")
+        val path = "https://www.themoviedb.org/t/p/w780" + (response?.backdrop_path ?: "")
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
@@ -84,7 +96,9 @@ class DetailActivity: FragmentActivity() {
     }
 
     fun getSubtitle(response: DetailResponse?): String {
-        val rating = if(response!!.adult) {
+        if (response == null ) return ""
+
+        val rating = if(response.adult) {
             "18+"
         } else {
             "13+"
