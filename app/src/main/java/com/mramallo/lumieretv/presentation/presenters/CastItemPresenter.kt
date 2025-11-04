@@ -8,8 +8,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.model.Cast
-import com.mramallo.lumieretv.util.getHeightInPercent
-import com.mramallo.lumieretv.util.getWidthInPercent
 
 class CastItemPresenter: Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {

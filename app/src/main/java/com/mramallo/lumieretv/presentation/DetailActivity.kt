@@ -3,6 +3,7 @@ package com.mramallo.lumieretv.presentation
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,8 @@ import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.DetailResponse
 import com.mramallo.lumieretv.databinding.ActivityDetailBinding
 import com.mramallo.lumieretv.presentation.fragments.ListFragment
+import com.mramallo.lumieretv.util.isEllipsized
+import com.mramallo.lumieretv.util.openDescriptionDialog
 
 class DetailActivity: FragmentActivity() {
 
@@ -88,6 +91,20 @@ class DetailActivity: FragmentActivity() {
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
+
+        binding.description.isEllipsized {isEllipsized ->
+            binding.showMore.visibility = if(isEllipsized) View.VISIBLE else View.GONE
+
+            binding.showMore.setOnClickListener {
+                openDescriptionDialog(
+                    this,
+                    response?.title,
+                    getSubtitle(response),
+                    response?.overview.toString()
+                )
+            }
+
+        }
 
     }
 
