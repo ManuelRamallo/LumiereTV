@@ -1,5 +1,6 @@
 package com.mramallo.lumieretv.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -14,8 +15,10 @@ import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.DetailResponse
 import com.mramallo.lumieretv.databinding.ActivityDetailBinding
 import com.mramallo.lumieretv.presentation.fragments.ListFragment
+import com.mramallo.lumieretv.presentation.player.PlaybackActivity
 import com.mramallo.lumieretv.util.isEllipsized
 import com.mramallo.lumieretv.util.openDescriptionDialog
+import kotlin.jvm.java
 
 class DetailActivity: FragmentActivity() {
 
@@ -72,6 +75,11 @@ class DetailActivity: FragmentActivity() {
             }
 
             false
+        }
+
+        binding.play.setOnClickListener {
+            val intent = Intent(this, PlaybackActivity::class.java)
+            startActivity(intent)
         }
     }
 
