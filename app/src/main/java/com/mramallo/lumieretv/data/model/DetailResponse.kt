@@ -1,5 +1,9 @@
 package com.mramallo.lumieretv.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class DetailResponse(
     val adult: Boolean = false,
     val backdrop_path: String = "",
@@ -26,4 +30,4 @@ data class DetailResponse(
     val video: Boolean = false,
     val vote_average: Double = 0.0,
     val vote_count: Int = 0
-)
+) : Parcelable
