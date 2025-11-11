@@ -28,9 +28,7 @@ class ListFragment : RowsSupportFragment() {
     private var itemClickListener: ((Detail) -> Unit)? = null
 
     private val listRowPresenter =  object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM) {
-        override fun isUsingDefaultListSelectEffect(): Boolean {
-            return false
-        }
+        override fun isUsingDefaultListSelectEffect(): Boolean = false
     }.apply {
         shadowEnabled = false
     }
