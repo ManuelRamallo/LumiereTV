@@ -41,21 +41,21 @@ class CustomTransportControlGlue(
     }
 
 
-    override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-        if (host.isControlsOverlayVisible || (event != null && event.repeatCount > 0)) {
+    override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+        if (host.isControlsOverlayVisible || (event.repeatCount > 0)) {
             return super.onKey(v, keyCode, event)
         }
 
         return when (keyCode) {
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                if(event?.action != KeyEvent.ACTION_DOWN) false
+                if(event.action != KeyEvent.ACTION_DOWN) false
                 else {
                     onActionClicked(forwardAction)
                     true
                 }
             }
             KeyEvent.KEYCODE_DPAD_LEFT -> {
-                if(event?.action != KeyEvent.ACTION_DOWN) false
+                if(event.action != KeyEvent.ACTION_DOWN) false
                 else {
                     onActionClicked(rewindAction)
                     true
