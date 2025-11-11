@@ -14,8 +14,10 @@ import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.DetailResponse
 import com.mramallo.lumieretv.databinding.ActivityDetailBinding
+import com.mramallo.lumieretv.domain.model.Detail
 import com.mramallo.lumieretv.presentation.fragments.ListFragment
 import com.mramallo.lumieretv.presentation.player.PlaybackActivity
+import com.mramallo.lumieretv.util.getSubtitle
 import com.mramallo.lumieretv.util.isEllipsized
 import com.mramallo.lumieretv.util.openDescriptionDialog
 import kotlin.jvm.java
@@ -25,6 +27,8 @@ class DetailActivity: FragmentActivity() {
     lateinit var binding: ActivityDetailBinding
     lateinit var viewModel: DetailViewModel
     val castFragment = ListFragment()
+
+    var detailResponse: DetailResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,7 @@ class DetailActivity: FragmentActivity() {
                 is Response.Loading -> {
                 }
                 is Response.Success -> {
+                    detailResponse = it.data
                     setData(it.data)
                 }
                 is Response.Error -> {
@@ -79,6 +84,7 @@ class DetailActivity: FragmentActivity() {
 
         binding.play.setOnClickListener {
             val intent = Intent(this, PlaybackActivity::class.java)
+            intent.putExtra("movie_detail", detailResponse)
             startActivity(intent)
         }
     }
@@ -115,26 +121,4 @@ class DetailActivity: FragmentActivity() {
         }
 
     }
-
-    fun getSubtitle(response: DetailResponse?): String {
-        if (response == null ) return ""
-
-        val rating = if(response.adult) {
-            "18+"
-        } else {
-            "13+"
-        }
-
-        val genres = response.genres.joinToString(
-            prefix = " ",
-            postfix = " • ",
-            separator = " • "
-        ) { it.name }
-
-        val hours: Int = response.runtime / 60
-        val min: Int = response.runtime % 60
-
-        return rating + genres + hours + "h " + min + "m"
-    }
-
 }

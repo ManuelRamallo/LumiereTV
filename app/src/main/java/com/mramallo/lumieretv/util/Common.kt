@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Window
 import android.widget.TextView
 import com.mramallo.lumieretv.R
+import com.mramallo.lumieretv.data.model.DetailResponse
 
 fun getWidthInPercent(context: Context, percent: Int): Int {
     val width = context.resources.displayMetrics.widthPixels
@@ -39,4 +40,25 @@ fun openDescriptionDialog(context: Context, title: String?, subText: String, des
     }
 
     dialog.show()
+}
+
+fun getSubtitle(response: DetailResponse?): String {
+    if (response == null ) return ""
+
+    val rating = if(response.adult) {
+        "18+"
+    } else {
+        "13+"
+    }
+
+    val genres = response.genres.joinToString(
+        prefix = " ",
+        postfix = " • ",
+        separator = " • "
+    ) { it.name }
+
+    val hours: Int = response.runtime / 60
+    val min: Int = response.runtime % 60
+
+    return rating + genres + hours + "h " + min + "m"
 }

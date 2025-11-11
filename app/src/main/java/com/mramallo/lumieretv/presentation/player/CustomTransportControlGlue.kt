@@ -1,12 +1,20 @@
 package com.mramallo.lumieretv.presentation.player
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.KeyEvent
 import android.view.View
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.Action
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.PlaybackControlsRow
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.mramallo.lumieretv.data.model.DetailResponse
+import com.mramallo.lumieretv.util.getSubtitle
 
 class CustomTransportControlGlue(
     context: Context,
@@ -63,6 +71,36 @@ class CustomTransportControlGlue(
             }
             else -> super.onKey(v, keyCode, event)
         }
+    }
+
+    fun loadMovieInfo(detailResponse: DetailResponse?) {
+        subtitle = getSubtitle(detailResponse)
+        title = detailResponse?.title
+        val uriPath = "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        playerAdapter.setDataSource(Uri.parse(uriPath))
+
+
+        val path = "https://www.themoviedb.org/t/p/w780" + (detailResponse?.backdrop_path ?: "")
+        Glide.with(context)
+            .asBitmap()
+            .load(path)
+            .into(object : CustomTarget<Bitmap>(){
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    controlsRow.setImageBitmap(context, resource)
+                    host.notifyPlaybackRowChanged()
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    controlsRow.setImageBitmap(context, null)
+                    host.notifyPlaybackRowChanged()
+                }
+
+            })
+
+        playWhenPrepared()
     }
 
 }

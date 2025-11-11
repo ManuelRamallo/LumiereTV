@@ -1,6 +1,7 @@
 package com.mramallo.lumieretv.presentation.player
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -16,6 +17,8 @@ import androidx.leanback.widget.PlaybackSeekDataProvider
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.mramallo.lumieretv.R
+import com.mramallo.lumieretv.data.model.DetailResponse
+import kotlin.jvm.java
 
 class MyVideoFragment: VideoSupportFragment() {
 
@@ -27,16 +30,23 @@ class MyVideoFragment: VideoSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val detailResponse = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("movie_detail", DetailResponse::class.java)
+        } else {
+            arguments?.getParcelable<DetailResponse>("movie_detail")
+        }
+
         transportGlue = CustomTransportControlGlue(
             context = requireContext(),
             playerAdapter = BasicMediaPlayerAdapter(requireContext())
         )
 
         transportGlue.host = VideoSupportFragmentGlueHost(this)
-        transportGlue.subtitle = "My demo subtitle"
+        transportGlue.loadMovieInfo(detailResponse)
+        /*transportGlue.subtitle = "My demo subtitle"
         transportGlue.title = "My Android TV Development"
         val uriPath = "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-        transportGlue.playerAdapter.setDataSource(Uri.parse(uriPath))
+        transportGlue.playerAdapter.setDataSource(Uri.parse(uriPath))*/
 
         setOnKeyInterceptListener { view,  keyCode, event ->
             if( isControlsOverlayVisible || event.repeatCount > 0) {
