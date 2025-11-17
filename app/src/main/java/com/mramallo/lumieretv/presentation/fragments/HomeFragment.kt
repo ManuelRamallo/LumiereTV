@@ -2,24 +2,23 @@ package com.mramallo.lumieretv.presentation.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
+import com.mramallo.lumieretv.MyApplication
 import com.mramallo.lumieretv.R
-import com.mramallo.lumieretv.domain.model.DataModel
-import com.mramallo.lumieretv.domain.model.Detail
+import com.mramallo.lumieretv.data.api.Response
+import com.mramallo.lumieretv.data.model.Result
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
 import com.mramallo.lumieretv.presentation.DetailActivity
+import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModel
+import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModelFactory
 import com.mramallo.lumieretv.util.getBannerImage
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
 
 class HomeFragment : Fragment() {
 
@@ -27,11 +26,17 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var listFragment: ListFragment
 
+    private lateinit var viewModel: HomeViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val repository = (requireActivity().application as MyApplication).tmdbRepo
+        viewModel =
+            ViewModelProvider(this, HomeViewModelFactory(repository))[HomeViewModel::class.java]
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return _binding.root
     }
@@ -42,8 +47,6 @@ class HomeFragment : Fragment() {
     }
 
     fun init(view: View) {
-        //_binding = FragmentHomeBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -57,12 +60,31 @@ class HomeFragment : Fragment() {
         transaction.add(R.id.list_fragment, listFragment)
         transaction.commit()
 
-        val gson = Gson()
-        val i: InputStream = requireContext().assets.open("movies.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList: DataModel = gson.fromJson(br, DataModel::class.java)
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
+            when (it) {
+                is Response.Loading -> {}
+                is Response.Success -> {
+                    it.data?.results.let { results ->
+                        listFragment.bindData(results = results, "Now Playing")
+                    }
+                }
 
-        listFragment.binData(dataList = dataList)
+                is Response.Error -> {}
+            }
+        }
+
+        viewModel.topRatedMovies.observe(viewLifecycleOwner) {
+            when (it) {
+                is Response.Loading -> {}
+                is Response.Success -> {
+                    it.data?.results.let { results ->
+                        listFragment.bindData(results = results, "Top Rated")
+                    }
+                }
+
+                is Response.Error -> {}
+            }
+        }
 
         listFragment.setOnContentSelectedListener {
             updateBanner(it)
@@ -75,12 +97,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun updateBanner(detail: Detail) {
-        binding.tvTitle.text = detail.title
-        binding.tvDescription.text = detail.overview
+    fun updateBanner(result: Result) {
+        binding.tvTitle.text = result.title
+        binding.tvDescription.text = result.overview
 
         Glide.with(this)
-            .load(getBannerImage(detail.backdrop_path))
+            .load(getBannerImage(result.backdrop_path))
             .into(binding.imgBanner)
     }
 }

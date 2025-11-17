@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class DetailResponse(
     val adult: Boolean = false,
     val backdrop_path: String = "",
-    val belongs_to_collection: BelongsToCollection = BelongsToCollection(),
+    val belongs_to_collection: BelongsToCollection? = BelongsToCollection(),
     val budget: Int = 0,
     val genres: List<Genre> = listOf(),
     val homepage: String = "",

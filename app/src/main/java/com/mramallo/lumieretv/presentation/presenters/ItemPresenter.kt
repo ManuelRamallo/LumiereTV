@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.mramallo.lumieretv.R
-import com.mramallo.lumieretv.domain.model.Detail
+import com.mramallo.lumieretv.data.model.Result
 import com.mramallo.lumieretv.util.getPosterImage
 
 class ItemPresenter: Presenter() {
@@ -29,7 +29,7 @@ class ItemPresenter: Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any?) {
-        val content = item as? Detail
+        val content = item as? Result
         Log.d("image", "content: $content")
 
         val imageView = viewHolder.view.findViewById<ImageView>(R.id.poster_image)
