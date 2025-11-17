@@ -14,13 +14,13 @@ import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.DetailResponse
 import com.mramallo.lumieretv.databinding.ActivityDetailBinding
-import com.mramallo.lumieretv.domain.model.Detail
 import com.mramallo.lumieretv.presentation.fragments.ListFragment
 import com.mramallo.lumieretv.presentation.player.PlaybackActivity
+import com.mramallo.lumieretv.presentation.viewmodels.DetailViewModel
+import com.mramallo.lumieretv.presentation.viewmodels.DetailViewModelFactory
 import com.mramallo.lumieretv.util.getSubtitle
 import com.mramallo.lumieretv.util.isEllipsized
 import com.mramallo.lumieretv.util.openDescriptionDialog
-import kotlin.jvm.java
 
 class DetailActivity: FragmentActivity() {
 
@@ -39,7 +39,10 @@ class DetailActivity: FragmentActivity() {
         val movieId = intent.getIntExtra("id", 0)
         val repository = (application as MyApplication).tmdbRepo
 
-        viewModel = ViewModelProvider(this, DetailViewModelFactory(repository, movieId))[DetailViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            DetailViewModelFactory(repository, movieId)
+        )[DetailViewModel::class.java]
 
         viewModel.movieDetails.observe(this) {
             when(it) {
