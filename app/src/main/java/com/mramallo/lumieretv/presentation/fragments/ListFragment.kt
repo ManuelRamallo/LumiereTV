@@ -36,9 +36,20 @@ class ListFragment : RowsSupportFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = rootAdapter
-
         onItemViewSelectedListener = ItemViewSelectedListener()
         onItemViewClickedListener = ItemViewClickListener()
+
+        verticalGridView?.apply {
+            windowAlignment = 1
+            val context = view.context
+            val resources = context.resources
+            val density = resources.displayMetrics.density
+            val topMarginDp = 35
+            val offsetPx = (topMarginDp * density).toInt()
+            windowAlignmentOffset = offsetPx
+            windowAlignmentOffsetPercent = 33f
+        }
+
     }
 
     fun bindData(results: List<Result>?, title: String) {
