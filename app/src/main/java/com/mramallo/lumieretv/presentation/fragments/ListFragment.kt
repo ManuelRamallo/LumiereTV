@@ -53,20 +53,6 @@ class ListFragment : RowsSupportFragment() {
         rootAdapter.add(listRow)
     }
 
-    /*fun binData(dataList: DataModel) {
-        dataList.result.forEachIndexed { index, result ->
-            val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
-
-            result.details.forEach {
-                arrayObjectAdapter.add(it)
-            }
-
-            val headerItem = HeaderItem(result.title)
-            val listRow = ListRow(headerItem, arrayObjectAdapter)
-            rootAdapter.add(listRow)
-        }
-    }*/
-
     fun bindCastData(list: List<Cast>) {
         val arrayObjectAdapter = ArrayObjectAdapter(CastItemPresenter())
 

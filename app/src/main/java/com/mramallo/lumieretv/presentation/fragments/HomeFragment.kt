@@ -47,8 +47,6 @@ class HomeFragment : Fragment() {
     }
 
     fun init(view: View) {
-        //_binding = FragmentHomeBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -61,11 +59,6 @@ class HomeFragment : Fragment() {
         val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.list_fragment, listFragment)
         transaction.commit()
-
-        /*val gson = Gson()
-        val i: InputStream = requireContext().assets.open("movies.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList: DataModel = gson.fromJson(br, DataModel::class.java)*/
 
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
             when (it) {
