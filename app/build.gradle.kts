@@ -55,4 +55,5 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }

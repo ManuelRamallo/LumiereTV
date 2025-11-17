@@ -1,9 +1,7 @@
 package com.mramallo.lumieretv.presentation.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.FocusHighlight
@@ -16,16 +14,14 @@ import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
 import com.mramallo.lumieretv.data.model.Cast
-import com.mramallo.lumieretv.data.model.CastResponse
-import com.mramallo.lumieretv.domain.model.DataModel
-import com.mramallo.lumieretv.domain.model.Detail
+import com.mramallo.lumieretv.data.model.Result
 import com.mramallo.lumieretv.presentation.presenters.CastItemPresenter
 import com.mramallo.lumieretv.presentation.presenters.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
 
-    private var itemSelectedListener: ((Detail) -> Unit)? = null
-    private var itemClickListener: ((Detail) -> Unit)? = null
+    private var itemSelectedListener: ((Result) -> Unit)? = null
+    private var itemClickListener: ((Result) -> Unit)? = null
 
     private val listRowPresenter =  object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM) {
         override fun isUsingDefaultListSelectEffect(): Boolean = false
@@ -45,7 +41,19 @@ class ListFragment : RowsSupportFragment() {
         onItemViewClickedListener = ItemViewClickListener()
     }
 
-    fun binData(dataList: DataModel) {
+    fun bindData(results: List<Result>?, title: String) {
+        val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
+
+        results?.forEach {
+            arrayObjectAdapter.add(it)
+        }
+
+        val headerItem = HeaderItem(title)
+        val listRow = ListRow(headerItem, arrayObjectAdapter)
+        rootAdapter.add(listRow)
+    }
+
+    /*fun binData(dataList: DataModel) {
         dataList.result.forEachIndexed { index, result ->
             val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
 
@@ -57,7 +65,7 @@ class ListFragment : RowsSupportFragment() {
             val listRow = ListRow(headerItem, arrayObjectAdapter)
             rootAdapter.add(listRow)
         }
-    }
+    }*/
 
     fun bindCastData(list: List<Cast>) {
         val arrayObjectAdapter = ArrayObjectAdapter(CastItemPresenter())
@@ -71,11 +79,11 @@ class ListFragment : RowsSupportFragment() {
         rootAdapter.add(listRow)
     }
 
-    fun setOnContentSelectedListener(listener: (Detail) -> Unit){
+    fun setOnContentSelectedListener(listener: (Result) -> Unit) {
         this.itemSelectedListener = listener
     }
 
-    fun setOnItemClickListener(listener: (Detail) -> Unit){
+    fun setOnItemClickListener(listener: (Result) -> Unit) {
         this.itemClickListener = listener
     }
 
@@ -86,7 +94,7 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-            if(item is Detail){
+            if (item is Result) {
                 itemSelectedListener?.invoke(item)
             }
         }
@@ -99,7 +107,7 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-            if(item is Detail){
+            if (item is Result) {
                 itemClickListener?.invoke(item)
             }
         }
