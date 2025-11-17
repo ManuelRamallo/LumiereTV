@@ -1,4 +1,4 @@
-package com.mramallo.lumieretv.presentation
+package com.mramallo.lumieretv.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
