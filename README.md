@@ -8,6 +8,6 @@ Application for TV movies, series, etc
 - XML
 - Leanback
 - MVVM (Architecture Components)
-- Room Database (for local storage)
+- Local Storage
 - API Rest (Retrofit)
 - Clean Architecture
