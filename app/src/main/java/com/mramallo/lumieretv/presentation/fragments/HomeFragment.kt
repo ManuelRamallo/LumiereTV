@@ -16,6 +16,7 @@ import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.Result
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
 import com.mramallo.lumieretv.presentation.DetailActivity
+import com.mramallo.lumieretv.presentation.MainActivity
 import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModel
 import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModelFactory
 import com.mramallo.lumieretv.util.getBannerImage
@@ -59,6 +60,10 @@ class HomeFragment : Fragment() {
         val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.list_fragment, listFragment)
         transaction.commit()
+
+        listFragment.setOnNavigateLeftRequest {
+            (activity as? MainActivity)?.openSideMenuFromContent()
+        }
 
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
             when (it) {

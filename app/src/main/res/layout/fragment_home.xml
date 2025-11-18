@@ -99,6 +99,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:nextFocusLeft="@id/btn_home"
+        android:nextFocusUp="@id/btn_home"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/guideline_center" />
 

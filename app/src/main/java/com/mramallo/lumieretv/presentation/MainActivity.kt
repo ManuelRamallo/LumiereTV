@@ -180,4 +180,14 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         isOpenSideMenu = false
     }
 
+    fun openSideMenuFromContent() {
+        if (!isOpenSideMenu) {
+            switchToLastSelectedMenu()
+            openMenu()
+            isOpenSideMenu = true
+        } else {
+            switchToLastSelectedMenu()
+        }
+    }
+
 }
