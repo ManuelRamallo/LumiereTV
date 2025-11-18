@@ -109,6 +109,14 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                         switchToLastSelectedMenu()
                         openMenu()
                         isOpenSideMenu = true
+                        return true
+                    }
+                }
+
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    if (isOpenSideMenu) {
+                        closeMenu()
+                        return true
                     }
                 }
                 else -> {}
@@ -118,15 +126,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     }
 
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
-        if ( keyCode == KeyEvent.KEYCODE_DPAD_DOWN_RIGHT && isOpenSideMenu) {
-            isOpenSideMenu = false
-            closeMenu()
-        }
-
-        return super.onKeyDown(keyCode, event)
-    }
 
     override fun onBackPressed() {
         if(isOpenSideMenu) {
@@ -173,11 +172,37 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     }
 
     fun closeMenu() {
+        val animSlide: Animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left)
+        binding.blfNavBar.startAnimation(animSlide)
+
         binding.blfNavBar.requestLayout()
         binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 5)
 
-        binding.container.requestFocus()
         isOpenSideMenu = false
+        focusCurrentContent()
     }
 
+    fun openSideMenuFromContent() {
+        if (!isOpenSideMenu) {
+            switchToLastSelectedMenu()
+            openMenu()
+            isOpenSideMenu = true
+        } else {
+            switchToLastSelectedMenu()
+        }
+    }
+
+    private fun focusCurrentContent() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
+        if (currentFragment is ContentFocusable) {
+            currentFragment.requestInitialFocus()
+        } else {
+            binding.container.requestFocus()
+        }
+    }
+
+}
+
+interface ContentFocusable {
+    fun requestInitialFocus()
 }

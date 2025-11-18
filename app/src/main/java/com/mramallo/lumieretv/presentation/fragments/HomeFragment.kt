@@ -15,12 +15,14 @@ import com.mramallo.lumieretv.R
 import com.mramallo.lumieretv.data.api.Response
 import com.mramallo.lumieretv.data.model.Result
 import com.mramallo.lumieretv.databinding.FragmentHomeBinding
+import com.mramallo.lumieretv.presentation.ContentFocusable
 import com.mramallo.lumieretv.presentation.DetailActivity
+import com.mramallo.lumieretv.presentation.MainActivity
 import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModel
 import com.mramallo.lumieretv.presentation.viewmodels.HomeViewModelFactory
 import com.mramallo.lumieretv.util.getBannerImage
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ContentFocusable {
 
     private lateinit var _binding: FragmentHomeBinding
     private val binding get() = _binding
@@ -59,6 +61,10 @@ class HomeFragment : Fragment() {
         val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.list_fragment, listFragment)
         transaction.commit()
+
+        listFragment.setOnNavigateLeftRequest {
+            (activity as? MainActivity)?.openSideMenuFromContent()
+        }
 
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
             when (it) {
@@ -104,5 +110,13 @@ class HomeFragment : Fragment() {
         Glide.with(this)
             .load(getBannerImage(result.backdrop_path))
             .into(binding.imgBanner)
+    }
+
+    override fun requestInitialFocus() {
+        if (this::listFragment.isInitialized) {
+            listFragment.requestFocus()
+        } else {
+            binding.root.requestFocus()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.mramallo.lumieretv.presentation.fragments
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
@@ -22,6 +23,8 @@ class ListFragment : RowsSupportFragment() {
 
     private var itemSelectedListener: ((Result) -> Unit)? = null
     private var itemClickListener: ((Result) -> Unit)? = null
+    private var navigateLeftListener: (() -> Unit)? = null
+    private var currentRowViewHolder: ListRowPresenter.ViewHolder? = null
 
     private val listRowPresenter = object : ListRowPresenter(FocusHighlight.ZOOM_FACTOR_SMALL) {
         override fun isUsingDefaultListSelectEffect(): Boolean = false
@@ -48,6 +51,19 @@ class ListFragment : RowsSupportFragment() {
             val offsetPx = (topMarginDp * density).toInt()
             windowAlignmentOffset = offsetPx
             windowAlignmentOffsetPercent = 33f
+
+            setOnKeyInterceptListener { event ->
+                if (
+                    navigateLeftListener != null &&
+                    event?.action == KeyEvent.ACTION_DOWN &&
+                    event.keyCode == KeyEvent.KEYCODE_DPAD_LEFT &&
+                    isAtRowStart()
+                ) {
+                    navigateLeftListener?.invoke()
+                    return@setOnKeyInterceptListener true
+                }
+                false
+            }
         }
 
     }
@@ -84,6 +100,10 @@ class ListFragment : RowsSupportFragment() {
         this.itemClickListener = listener
     }
 
+    fun setOnNavigateLeftRequest(listener: () -> Unit) {
+        this.navigateLeftListener = listener
+    }
+
     inner class ItemViewSelectedListener: OnItemViewSelectedListener {
         override fun onItemSelected(
             itemViewHolder: Presenter.ViewHolder?,
@@ -94,6 +114,7 @@ class ListFragment : RowsSupportFragment() {
             if (item is Result) {
                 itemSelectedListener?.invoke(item)
             }
+            currentRowViewHolder = rowViewHolder as? ListRowPresenter.ViewHolder
         }
     }
 
@@ -109,6 +130,12 @@ class ListFragment : RowsSupportFragment() {
             }
         }
 
+    }
+
+    private fun isAtRowStart(): Boolean {
+        val rowHolder = currentRowViewHolder ?: return false
+        val gridView = rowHolder.gridView ?: return false
+        return gridView.selectedPosition == 0
     }
 
     fun requestFocus(): View {
