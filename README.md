@@ -9,4 +9,5 @@ Application for TV movies, series, etc
 - Leanback
 - MVVM (Architecture Components)
 - Room Database (for local storage)
+- API Rest (Retrofit)
 - Clean Architecture
