@@ -207,6 +207,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         navBarAnimator?.cancel()
 
         navBarAnimator = ValueAnimator.ofInt(currentWidth, targetWidth).apply {
+            setTextMenuOption(false)
             duration = navMenuAnimationDuration
             interpolator = DecelerateInterpolator()
             addUpdateListener { animator ->
@@ -217,6 +218,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     navBarAnimator = null
+                    setTextMenuOption(true)
                     onEnd?.invoke()
                 }
 
@@ -227,6 +229,17 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         }
 
         navBarAnimator?.start()
+    }
+
+    private fun setTextMenuOption(haveText: Boolean) {
+        binding.btnSearch.text = if (haveText) getString(R.string.menu_search) else null
+        binding.btnHome.text = if (haveText) getString(R.string.menu_home) else null
+        binding.btnMovies.text = if (haveText) getString(R.string.menu_movies) else null
+        binding.btnTv.text = if (haveText) getString(R.string.menu_tv) else null
+        binding.btnSports.text = if (haveText) getString(R.string.menu_sports) else null
+        binding.btnSettings.text = if (haveText) getString(R.string.menu_settings) else null
+        binding.btnLanguage.text = if (haveText) getString(R.string.menu_language) else null
+        binding.btnGenre.text = if (haveText) getString(R.string.menu_genre) else null
     }
 
 }
