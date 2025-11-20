@@ -1,10 +1,12 @@
 package com.mramallo.lumieretv.presentation
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -22,6 +24,8 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     private lateinit var binding: ActivityMainBinding
     private var isOpenSideMenu = false
     private var selectedMenu = Constants.MENU_HOME
+    private var navBarAnimator: ValueAnimator? = null
+    private val navMenuAnimationDuration = 280L
     lateinit var lastSelectedMenu: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +64,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     }
 
     override fun onKey(view: View?, i: Int, keyEvent: KeyEvent?): Boolean {
-        // Asegurarse de que solo se procesa el evento una vez (al presionar, no al soltar)
         if (keyEvent?.action == KeyEvent.ACTION_DOWN) {
             when(i) {
                 KeyEvent.KEYCODE_DPAD_CENTER -> {
@@ -129,7 +132,6 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
     override fun onBackPressed() {
         if(isOpenSideMenu) {
-            isOpenSideMenu = false
             closeMenu()
         } else super.onBackPressed()
     }
@@ -163,23 +165,16 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         }
     }
 
-    fun openMenu(){
-        val animSlide: Animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left)
-        binding.blfNavBar.startAnimation(animSlide)
-
-        binding.blfNavBar.requestLayout()
-        binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 16)
+    fun openMenu() {
+        animateNavBarWidth(getWidthInPercent(this, 16))
     }
 
     fun closeMenu() {
-        val animSlide: Animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left)
-        binding.blfNavBar.startAnimation(animSlide)
-
-        binding.blfNavBar.requestLayout()
-        binding.blfNavBar.layoutParams.width = getWidthInPercent(this, 5)
-
+        if (!isOpenSideMenu) return
         isOpenSideMenu = false
-        focusCurrentContent()
+        animateNavBarWidth(getWidthInPercent(this, 5)) {
+            focusCurrentContent()
+        }
     }
 
     fun openSideMenuFromContent() {
@@ -199,6 +194,39 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         } else {
             binding.container.requestFocus()
         }
+    }
+
+    private fun animateNavBarWidth(targetWidth: Int, onEnd: (() -> Unit)? = null) {
+        val layoutParams = binding.blfNavBar.layoutParams
+        val currentWidth = layoutParams.width
+        if (currentWidth == targetWidth) {
+            onEnd?.invoke()
+            return
+        }
+
+        navBarAnimator?.cancel()
+
+        navBarAnimator = ValueAnimator.ofInt(currentWidth, targetWidth).apply {
+            duration = navMenuAnimationDuration
+            interpolator = DecelerateInterpolator()
+            addUpdateListener { animator ->
+                layoutParams.width = animator.animatedValue as Int
+                binding.blfNavBar.layoutParams = layoutParams
+                binding.blfNavBar.requestLayout()
+            }
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    navBarAnimator = null
+                    onEnd?.invoke()
+                }
+
+                override fun onAnimationCancel(animation: Animator) {
+                    navBarAnimator = null
+                }
+            })
+        }
+
+        navBarAnimator?.start()
     }
 
 }
